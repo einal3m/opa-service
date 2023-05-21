@@ -1,0 +1,13 @@
+{
+  "name": "opa-app",
+  "version": "1.0.0",
+  "description": "Receives authorization requests, forwards to OPA.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "express": "~4.17.3"
+  }
+}
