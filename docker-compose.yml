@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  app:
+    build: ./app
+    ports:
+      - "8000:80"
+    depends_on:
+      - opa
+  opa:
+    build: ./opa
+    ports:
+      - "8181:8181"
