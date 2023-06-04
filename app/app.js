@@ -15,20 +15,23 @@ app.get("/health", function (req, res, next) {
   res
     .status(200)
     .send(
-      "Welcome to the OPA App. Please make GET policy requests using /request endpoint."
+      "Welcome to the OPA App. Please make GET policy requests using /allow endpoint."
     );
 });
 
-// Router for /request endpoint.
-app.get("/request", async (req, res, next) => {
-  let requestGroup = req.header("group");
-  let requestResource = req.header("resource");
+// Router for /allow endpoint.
+app.get("/allow", async (req, res) => {
+  let userId = req.body.userId;
+  let action = req.body.action;
+  let resource = req.body.resource;
+  let type = req.body.type;
+
   let requestData = {
-    input: { group: requestGroup, resource: requestResource },
+    input: { action: action, userId: userId, type: type },
   };
 
   // Make HTTP Request to Policy Service (OPA) with Request Data
-  let policyServiceURL = "http://opa:8181/v1/data/opablog/allow";
+  let policyServiceURL = `http://opa:8181/v1/data/${resource}/allow`;
   const policyServiceRequest = async () => {
     try {
       const policyResponse = await axios.post(policyServiceURL, requestData);
@@ -40,24 +43,19 @@ app.get("/request", async (req, res, next) => {
 
   // After evaluation, return Policy Decision to the user.
   let policyServiceResult = await policyServiceRequest();
+
   if (policyServiceResult) {
     res
       .status(200)
       .send(
-        "Policy Decision: " +
-          policyServiceResult +
-          ". User IS authorized to access " +
-          requestResource
+        `Policy Decision: ${policyServiceResult}. User "${userId}" IS allowed to ${action} a ${type}`
       );
     return;
   } else if (!policyServiceResult) {
     res
       .status(401)
       .send(
-        "Policy Decision: " +
-          policyServiceResult +
-          ". User NOT authorized to access " +
-          requestResource
+        `Policy Decision: ${policyServiceResult}. User "${userId}" NOT allowed to ${action} a ${type}`
       );
     return;
   } else {

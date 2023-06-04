@@ -1,7 +1,37 @@
 {
-  "GroupPermissions": {
-    "file1": [ "Guest", "Dev", "Admin" ],
-    "file2": [ "Admin" ],
-    "file_secret": [ "Admin" ]
+  "roleAssignments": {
+    "leia": {
+      "groupMemberships": [ "rebels" ],
+      "leader": {
+        "isLeader": true,
+        "leaderScope": [ "rebels" ]
+      }
+    },
+    "hansolo": {
+      "groupMemberships": [ "rebels", "smugglers" ]
+    },
+    "jabba": {
+      "groupMemberships": [ "smugglers" ],
+      "leader": {
+        "isLeader": true,
+        "leaderScope": [ "smugglers" ]
+      }
+    },
+    "luke": {
+      "groupMemberships": [ "rebels", "jedis" ]
+    },
+    "obiwan": {
+      "groupMemberships": [ "jedis" ]
+    },
+    "yoda": {
+      "groupMemberships": [ "jedis" ],
+      "leader": {
+        "isLeader": true,
+        "leaderScope": [ "jedis" ]
+      }
+    },
+    "chewbacca": {
+      "groupMemberships": [ "rebels", "smugglers" ]
+    }
   }
 }

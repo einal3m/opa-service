@@ -11,5 +11,25 @@ docker-compose up
 To make a request to check authorization:
 
 ```
-curl --location --request GET 'http://localhost:8000/request' --header 'group: Guest' --header 'resource: file1'
+# luke is allowed to drive an x-wing
+curl --request GET \
+  --url http://localhost:8000/allow \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"resource": "spaceships",
+	"type": "x-wing",
+	"action": "drive",
+	"userId": "luke"
+}'
+
+# han solo is not allowed to wield a lightsabre
+curl --request GET \
+  --url http://localhost:8000/allow \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"resource": "weapons",
+  "type": "lightsaber",
+	"action": "wield",
+	"userId": "hansolo"
+}'
 ```
