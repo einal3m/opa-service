@@ -33,3 +33,10 @@ curl --request GET \
 	"userId": "hansolo"
 }'
 ```
+
+OPA doesn't automatically reload policies. If you want to make changes to the policies, run the
+following to upload the policies to OPA.
+
+```
+./upload_policies.sh
+```
